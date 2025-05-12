@@ -28,15 +28,49 @@ public class FuncionAptitud extends FitnessFunction {
         
         int x_valor = Integer.parseInt(x1+""+x2+""+x3+""+x4, 2);
         int y_valor = Integer.parseInt(y1+""+y2+""+y3+""+y4, 2);
+
+
         if (signoX==0){
             x_valor = -x_valor;
         }
         if (signoY==0){
             y_valor = -y_valor;
         }
+
+        if (x_valor == y_valor) {
+            return 0; // Penalización máxima
+        }
+
+        
         //Al restarle estoy obteniendo el valor mínimo global 
         //También se puede sacar la inversa
-        double score = 450-(x_valor*x_valor + y_valor*y_valor);
+        // double score = 352-(x_valor*x_valor + y_valor*y_valor);
+        double resultado1 = x_valor*x_valor -8*x_valor+7;
+        double resultado2 = y_valor*y_valor -8*y_valor+7;
+
+        if (resultado1<0){
+            resultado1 = resultado1 * -1;
+        }
+
+        if (resultado2<0){
+            resultado2 = resultado2 * -1;
+        }
+
+        // if (resultado1 < 0) {
+        //     resultado1 = resultado1 * 2; // Penalización más fuerte
+        // }
+        
+        // if (resultado2 < 0) {
+        //     resultado2 = resultado2 * 2; // Penalización más fuerte
+        // }
+
+        // if ((x_valor == 7 && y_valor == 1) || (x_valor == 1 && y_valor == 7)) {
+        //     return 704; // Máximo score
+        // }
+
+        // double score = 352-(x_valor*x_valor -8*x_valor+7);
+        // double score = 352-(resultado);
+        double score = 704-(resultado1 + resultado2);
         return score;
     }
 }

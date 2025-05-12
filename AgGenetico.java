@@ -55,6 +55,7 @@ public class AgGenetico {
             int evolucion) {
         try {
             config.setPopulationSize(poblacionInicial);
+            //Genera una población inicial de individuos, donde cada individuo tiene un cromosoma con genes aleatorios
             Genotype poblacion = Genotype.randomInitialGenotype(config);
             evalucionar(poblacion, iteracionGeneracion, evolucion);
         } catch (InvalidConfigurationException ex) {
@@ -62,12 +63,12 @@ public class AgGenetico {
         }
     }
 
-    private void evalucionar(Genotype poblacion, int iteracionGeneracion,
-            int evolucion) {
+    private void evalucionar(Genotype poblacion, int iteracionGeneracion, int evolucion) {
         
         for (int i = 0; i < iteracionGeneracion; i++) {
             ver_poblacion(poblacion.getChromosomes());
             poblacion.evolve(evolucion);
+            System.out.println("Mejor individuo");
             ver_individuo(poblacion.getFittestChromosome());
         }
         System.out.println("Optimo: ");
@@ -105,7 +106,7 @@ public class AgGenetico {
         if (signoY == 0) {
             y_valor = -y_valor;
         }
-        System.out.println("x: "+x_valor+" y: "+y_valor);
+        System.out.println("x: "+x_valor + " y: "+y_valor);
         System.out.println("**************");
     }
 
