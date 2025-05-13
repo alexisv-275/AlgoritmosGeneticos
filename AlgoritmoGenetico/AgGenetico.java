@@ -1,6 +1,5 @@
 package AlgoritmosGeneticos.AlgoritmoGenetico;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,35 +13,36 @@ import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
 
 public class AgGenetico {
+    private Genotype poblacion; // Class-level attribute to store the population
 
     public void configurar(int genes, int poblacionInicial, int iteracionGeneracion, int evolucion) {
         try {
-    // Crea una configuración predeterminada para el algoritmo genético
-    Configuration config = new DefaultConfiguration(); //cruce por un punto y una mutacion (seleccion natural)
+            Configuration.reset();
+            // Crea una configuración predeterminada para el algoritmo genético
+            Configuration config = new DefaultConfiguration(); // cruce por un punto y una mutacion (seleccion natural)
 
-    // Crea una instancia de la función de aptitud personalizada
-    FuncionAptitud fa = new FuncionAptitud();
+            // Crea una instancia de la función de aptitud personalizada
+            FuncionAptitud fa = new FuncionAptitud();
 
-   
-        // Establece la función de aptitud en la configuración
-        config.setFitnessFunction(fa);
+            // Establece la función de aptitud en la configuración
+            config.setFitnessFunction(fa);
 
-        // Crea un arreglo de genes para el cromosoma, con tamaño igual al número de genes especificado
-        Gene[] sampleGenes = new Gene[genes];
+            // Crea un arreglo de genes para el cromosoma, con tamaño igual al número de
+            // genes especificado
+            Gene[] sampleGenes = new Gene[genes];
 
-        // Inicializa cada gen con un rango de valores (en este caso, entre 0 y 1)
-        for (int i = 0; i < genes; i++) {
-            //Double -> DoubleGene
-         sampleGenes[i] = new IntegerGene(config, 0, 1); 
-        }
+            // Inicializa cada gen con un rango de valores (en este caso, entre 0 y 1)
+            for (int i = 0; i < genes; i++) {
+                // Double -> DoubleGene
+                sampleGenes[i] = new IntegerGene(config, 0, 1);
+            }
 
-        // Crea un cromosoma con los genes configurados
-        Chromosome ic = new Chromosome(config, sampleGenes);
+            // Crea un cromosoma con los genes configurados
+            Chromosome ic = new Chromosome(config, sampleGenes);
 
-        // Establece el cromosoma de muestra en la configuración
-        config.setSampleChromosome(ic);
-        conf_poblacion(config, poblacionInicial, iteracionGeneracion, evolucion);
-
+            // Establece el cromosoma de muestra en la configuración
+            config.setSampleChromosome(ic);
+            conf_poblacion(config, poblacionInicial, iteracionGeneracion, evolucion);
 
         } catch (InvalidConfigurationException e) {
             e.printStackTrace();
@@ -55,8 +55,8 @@ public class AgGenetico {
             int evolucion) {
         try {
             config.setPopulationSize(poblacionInicial);
-            //Genera una población inicial de individuos, donde cada individuo tiene un cromosoma con genes aleatorios
-            Genotype poblacion = Genotype.randomInitialGenotype(config);
+            poblacion = Genotype.randomInitialGenotype(config);
+            // Genotype poblacion = Genotype.randomInitialGenotype(config);
             evalucionar(poblacion, iteracionGeneracion, evolucion);
         } catch (InvalidConfigurationException ex) {
             Logger.getLogger(AgGenetico.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,10 +64,10 @@ public class AgGenetico {
     }
 
     private void evalucionar(Genotype poblacion, int iteracionGeneracion, int evolucion) {
-        
+
         for (int i = 0; i < iteracionGeneracion; i++) {
             System.out.println("Iteracion: " + i);
-            ver_poblacion(poblacion.getChromosomes());
+            // ver_poblacion(poblacion.getChromosomes());
             poblacion.evolve(evolucion);
             System.out.println("Mejor individuo");
             ver_individuo(poblacion.getFittestChromosome());
@@ -76,16 +76,16 @@ public class AgGenetico {
         ver_individuo(poblacion.getFittestChromosome());
 
     }
-    
-    private void ver_poblacion(IChromosome[] ic){
+
+    private void ver_poblacion(IChromosome[] ic) {
         System.out.println("------Poblacion:--------");
         for (IChromosome iChromosome : ic) {
             ver_individuo(iChromosome);
         }
         System.out.println("------------------------");
     }
-    
-    private void ver_individuo(IChromosome ic) {
+
+    public void ver_individuo(IChromosome ic) {
         System.out.println("****Individuo:****");
         int signoX = (int) ic.getGene(0).getAllele();
         int x1 = (int) ic.getGene(1).getAllele();
@@ -107,10 +107,14 @@ public class AgGenetico {
         if (signoY == 0) {
             y_valor = -y_valor;
         }
-        System.out.println("x: "+x_valor + " y: "+y_valor);
+        System.out.println("x: " + x_valor + " y: " + y_valor);
         System.out.println("**************");
     }
 
+    public IChromosome getMejorIndividuo() {
+        // Supongamos que `poblacion` es un atributo de la clase que almacena el
+        // Genotype
+        return poblacion.getFittestChromosome(); // Devolver el mejor cromosoma
+    }
 
-    
 }
