@@ -1,4 +1,4 @@
-package AlgoritmosGeneticos;
+package AlgoritmosGeneticos.AlgoritmoGenetico;
 
 import org.jgap.FitnessFunction;
 import org.jgap.IChromosome;
@@ -45,23 +45,18 @@ public class FuncionAptitud extends FitnessFunction {
         //Al restarle estoy obteniendo el valor mínimo global 
         //También se puede sacar la inversa
         // double score = 352-(x_valor*x_valor + y_valor*y_valor);
-        double resultado1 = x_valor*x_valor -8*x_valor+7;
-        double resultado2 = y_valor*y_valor -8*y_valor+7;
+        double resultado1 = x_valor * x_valor - 8 * x_valor + 7;
+        double resultado2 = y_valor * y_valor - 8 * y_valor + 7;
 
-        if (resultado1<0){
-            resultado1 = resultado1 * -1;
-        }
-
-        if (resultado2<0){
-            resultado2 = resultado2 * -1;
-        }
+        resultado1 = Math.abs(resultado1);
+        resultado2 = Math.abs(resultado2);
 
         // if (resultado1 < 0) {
-        //     resultado1 = resultado1 * 2; // Penalización más fuerte
+        //     resultado1 = resultado1 * -1; 
         // }
         
         // if (resultado2 < 0) {
-        //     resultado2 = resultado2 * 2; // Penalización más fuerte
+        //     resultado2 = resultado2 * -1; 
         // }
 
         // if ((x_valor == 7 && y_valor == 1) || (x_valor == 1 && y_valor == 7)) {

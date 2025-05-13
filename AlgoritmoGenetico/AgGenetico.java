@@ -1,4 +1,4 @@
-package AlgoritmosGeneticos;
+package AlgoritmosGeneticos.AlgoritmoGenetico;
 
 
 import java.util.logging.Level;
@@ -66,6 +66,7 @@ public class AgGenetico {
     private void evalucionar(Genotype poblacion, int iteracionGeneracion, int evolucion) {
         
         for (int i = 0; i < iteracionGeneracion; i++) {
+            System.out.println("Iteracion: " + i);
             ver_poblacion(poblacion.getChromosomes());
             poblacion.evolve(evolucion);
             System.out.println("Mejor individuo");
